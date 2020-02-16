@@ -1,0 +1,20 @@
+input[type="file"] {
+  display: none;
+}
+
+.image-row{
+  margin-top: 20px;
+}
+
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+  background-color: #ebf5ff;
+}
+
+
+image-cropper {
+  max-height: 400px;
+}

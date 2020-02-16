@@ -1,0 +1,23 @@
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: white;
+}
+
+.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+  background-color: rgba(33, 255, 236, 0.06);
+}
+
+td > fa-icon {
+  font-size: 20px;
+}
+
+
+:host >>> .tooltip-inner {
+  background-color: rgba(32, 150, 79, 0.84);
+  color: #fff;
+}
+:host >>> .tooltip.top .tooltip-arrow:before,
+:host >>> .tooltip.top .tooltip-arrow {
+  border-top-color: rgba(32, 150, 79, 0.84);
+  background-color: rgba(32, 150, 79, 0.84);
+}
+

@@ -1,0 +1,140 @@
+<div class="modal-header modal-header-primary">
+  <h5>Add User
+  </h5>
+  <button type="button" class="close float-right" (click)="closeModal()">
+    <fa-icon [icon]="faCross" class="close-modal"></fa-icon>
+  </button>
+</div>
+<div class="modal-body" style="margin: 0 10px;">
+  <form [formGroup]="createUserForm">
+    <div class="form-row">
+      <div class="col-4">
+        <label for="username">First Name <span class="required">*</span></label>
+        <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="First Name" formControlName="FirstName" [ngClass]="{ 'is-invalid': f.FirstName.touched && f.FirstName.errors }">
+        <div *ngIf="f.FirstName.touched && f.FirstName.errors" class="invalid-feedback">
+          <div *ngIf="f.FirstName.errors.required">First Name is required</div>
+          <div *ngIf="f.FirstName.errors.minlength">First Name should be at least three characters.</div>
+        </div>
+      </div>
+      <div class="form-group col-4">
+        <label for="MiddleName">Middle Name</label>
+        <input type="text" class="form-control" name="MiddleName" id="MiddleName" placeholder="Middle Name" formControlName="MiddleName" [ngClass]="{ 'is-invalid': f.MiddleName.touched && f.MiddleName.errors }">
+        <div *ngIf="f.MiddleName.touched && f.MiddleName.errors" class="invalid-feedback">
+          <div *ngIf="f.MiddleName.errors.minlength">Middle Name should be at least three characters.</div>
+        </div>
+      </div>
+      <div class="form-group col-4">
+        <label for="LastName">Last Name <span class="required">*</span></label>
+        <input type="text" class="form-control" name="LastName" id="LastName" placeholder="Last Name" formControlName="LastName" [ngClass]="{ 'is-invalid': f.LastName.touched && f.LastName.errors }">
+        <div *ngIf="f.LastName.touched && f.LastName.errors" class="invalid-feedback">
+          <div *ngIf="f.LastName.errors.required">Last Name is required</div>
+          <div *ngIf="f.LastName.errors.minlength">Last Name should be at least three characters.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-6">
+        <label for="roleName">Role <span class="required">*</span></label>
+        <ng-select [items]="roles"
+                   bindLabel="roleName"
+                   bindValue="id"
+                   [multiple]="false"
+                   placeholder="Select Role"
+                   formControlName="selectedItemIds"
+                   [ngClass]="{ 'is-invalid': f.selectedItemIds.touched && f.selectedItemIds.errors }">
+        </ng-select>
+        <div *ngIf="f.selectedItemIds.touched && f.selectedItemIds.errors" class="invalid-feedback">
+          <div *ngIf="f.selectedItemIds.errors.required">Role is required</div>
+        </div>
+      </div>
+
+
+    </div><div class="form-row">
+      <div class="form-group row col-6">
+        <label for="roleName">Role <span class="required">*</span></label>
+        <div class="col-4">
+          <input type="text" class="form-control" name="MiddleName" id="MiddleName" placeholder="DD" formControlName="MiddleName" [ngClass]="{ 'is-invalid': f.MiddleName.touched && f.MiddleName.errors }">
+
+        </div>
+        <div class="col-4">
+          <input type="text" class="form-control" name="MiddleName" id="MiddleName" placeholder="MM" formControlName="MiddleName" [ngClass]="{ 'is-invalid': f.MiddleName.touched && f.MiddleName.errors }">
+
+        </div>
+        <div class="col-4">
+          <input type="text" class="form-control" name="MiddleName" id="MiddleName" placeholder="YYYY" formControlName="MiddleName" [ngClass]="{ 'is-invalid': f.MiddleName.touched && f.MiddleName.errors }">
+
+        </div>
+        <div *ngIf="f.selectedItemIds.touched && f.selectedItemIds.errors" class="invalid-feedback">
+          <div *ngIf="f.selectedItemIds.errors.required">Role is required</div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="form-row">
+      <div class="form-group col-6">
+        <label for="Phone">Phone </label>
+        <input type="text" class="form-control" name="Phone" max id="Phone" placeholder="Phone" formControlName="Phone" [ngClass]="{ 'is-invalid': f.Phone.touched && f.Phone.errors }">
+        <div *ngIf="f.Phone.touched && f.Phone.errors" class="invalid-feedback">
+          <div *ngIf="f.Phone.errors.required">Phone is required</div>
+          <div *ngIf="f.Phone.errors.minlength || f.Phone.errors.maxlength || f.Phone.errors.pattern">Please Enter Valid Phone Number.</div>
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <label for="Email">Email</label>
+        <input type="email" class="form-control" name="Email" id="Email" placeholder="mail@prayogshalanepal.com" formControlName="Email" [ngClass]="{ 'is-invalid': f.Email.touched && f.Email.errors }" />
+        <div *ngIf="f.Email.touched && f.Email.errors" class="invalid-feedback">
+          <div>Please enter valid email.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-6">
+        <label for="username">Username <span class="required">*</span></label>
+        <input type="text" class="form-control" name="username" id="username" placeholder="username" formControlName="username" [ngClass]="{ 'is-invalid': f.username.touched && f.username.errors }">
+        <div *ngIf="f.username.touched && f.username.errors" class="invalid-feedback">
+          <div *ngIf="f.username.errors.required">User Name is required</div>
+          <div *ngIf="f.username.errors.minlength">User Name should be at least three characters.</div>
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <label>Password</label>
+        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors }" />
+        <div *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+          <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="form-row">
+      <div class="form-group col-6"></div>
+      <div class="form-group col-6">
+        <label>Confirm Password</label>
+        <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': f.confirmPassword.touched && f.confirmPassword.errors }" />
+        <div *ngIf="f.confirmPassword.touched && f.confirmPassword.errors" class="invalid-feedback">
+          <div *ngIf="f.confirmPassword.errors.required">Please confirm password.</div>
+          <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+        </div>
+      </div>
+    </div>
+
+
+<!--    <div class="form-row">-->
+<!--      <div class="form-group">-->
+<!--        <label for="Address">Address</label>-->
+<!--        <textarea class="form-control" name="Address" id="Address" placeholder="Address" formControlName="Address" [ngClass]="{ 'is-invalid': f.Address.touched && f.Address.errors }"></textarea>-->
+<!--        <div *ngIf="f.Address.touched && f.Address.errors" class="invalid-feedback">-->
+<!--          <div *ngIf="f.Address.errors.required">Address is required</div>-->
+<!--          <div *ngIf="f.Address.errors.minlength">Address should be at least three characters.</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-warning float-right" [disabled]="createUserForm.pristine" (click)="onReset()">Reset</button>
+  <button type="submit" class="btn btn-success float-right" [disabled]="!createUserForm.valid" (click)="onSubmitUser(f.username.errors)">Save</button>
+  <button type="submit" class="btn btn-success float-right"  (click)="closeModal()">Close</button>
+</div>
+

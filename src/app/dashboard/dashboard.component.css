@@ -1,0 +1,26 @@
+nav{
+  background-color: transparent;
+  box-shadow: none
+}
+.nav-wrapper ul li{
+  padding-top:15px;
+  margin: 5px;
+}
+.nav-wrapper a , .nav-wrapper ul li a{
+  color: #e3c4c8;
+  font-family: Steinbeck,sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+    line-height: 1em;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+
+section.container{
+  width: 100%;
+  position: absolute;
+  height:100%;
+  /* background-color: #0b7878; */
+}

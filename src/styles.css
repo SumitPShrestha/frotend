@@ -1,0 +1,49 @@
+.btn-primary {
+  color: #fff;
+  background-color: #2196f3;
+  border-color: #2196f3;
+}
+
+.btn-info {
+  color: #fff;
+  background-color: #00bcd4;
+  border-color: #00bcd4;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #f44336;
+  border-color: #f44336;
+}
+
+.close-modal {
+  color: #ff7e00;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+.required{
+  color: #f44336;
+  font-weight: bold;
+}
+
+.btn-warning{
+  color: #fffbd8;
+}
+
+.input-group-text{
+  background-color: #ebf5ff;
+}
+
+.paddingless {
+  padding: 0px !important;
+}
+
+.container{
+  margin-top: 10px;
+}
+

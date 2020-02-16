@@ -1,0 +1,90 @@
+<div class="container col-12">
+  <div class="row">
+    <div class="col-12">
+      <h4>Category Types <p data-placement="top" data-toggle="tooltip" title="Add Category" class="float-right">
+  <button class="btn btn-primary btn-xs" data-title="Add Category" data-toggle="modal" data-target="#add" (click)="openCreateModal()" >
+    Add Category
+  </button>
+</p></h4>
+      <div class="table-responsive" *ngIf="categoryTypes && categoryTypes.length > 0 && !addPopupOn">
+        <table datatable id="categoryTypeTable" class="row-border hover" >
+          <thead>
+          <tr>
+            <th>Category Type </th>
+            <th>Description</th>
+            <th style="text-align: center">Active</th>
+            <th style="text-align: center">Edit</th>
+            <th style="text-align: center">De/Activate</th>
+            <th style="text-align: center">Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let cat of categoryTypes">
+            <td>{{cat.CategoryType}}</td>
+            <td>{{cat.Description}}</td>
+            <td class="center" style="text-align: center">
+                    <fa-icon [icon]="faCheckSquare" style="color: limegreen" *ngIf="cat.IsActive==1"></fa-icon>
+                    <fa-icon [icon]="faCheckSquare" style="color: lightslategrey" *ngIf="cat.IsActive==0"></fa-icon>
+                  </td>
+            <td class="center" style="text-align: center">
+                    <button type="button" class="btn btn-info btn-circle" (click)="openEditModal(cat)">
+                      <fa-icon [icon]="faEdit" style="padding: 10px" ></fa-icon>
+                    </button>
+                  </td>
+            <td class="center" style="text-align: center">
+              <button type="button" class="btn btn-outline-warning btn-secondary" *ngIf="cat.IsActive==1" (click)="openDeactivateModal(cat,deactivateTemplate)">
+                <fa-icon [icon]="faPowerOff" ></fa-icon>
+              </button>
+              <button type="button" class="btn btn-outline-success btn-secondary" *ngIf="cat.IsActive==0" (click)="openActivateModal(cat,activateTemplate)">
+                <fa-icon [icon]="faPowerOff" ></fa-icon>
+              </button>
+            </td>
+            <td class="center" style="text-align: center">
+              <button type="button" class="btn btn-outline-danger btn-dark" (click)="openDeleteModal(cat,deleteTemplate)">
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button>
+            </td>
+
+  </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #deactivateTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><fa-icon [icon]="faExclamationTriangle" style="color: darkorange"></fa-icon></h4>
+  </div>
+  <div class="modal-body">
+    <b>{{categoryTypeToDeactivate.CategoryType}} </b> will be deactivated !!!
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning btn-outline-danger" (click)="deactivateCategoryType(categoryTypeToDeactivate,'D')">Ok</button>
+    <button class="btn btn-secondary btn-outline-info" (click)="bsModalRef.hide()">Cancel</button>
+  </div>
+</ng-template>
+<ng-template #activateTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><fa-icon [icon]="faCheckCircle" style="color: limegreen"></fa-icon></h4>
+  </div>
+  <div class="modal-body">
+    <b>{{categoryTypeToDeactivate.CategoryType}} </b> will be activated !!!
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" (click)="deactivateCategoryType(categoryTypeToDeactivate,'A')">Ok</button>
+    <button class="btn btn-secondary btn-outline-info" (click)="bsModalRef.hide()">Cancel</button>
+  </div>
+</ng-template>
+<ng-template #deleteTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><fa-icon [icon]="faExclamationTriangle" style="color: darkorange"></fa-icon></h4>
+  </div>
+  <div class="modal-body">
+    <b>{{categoryTypeToDelete.CategoryType}}</b> will be deleted !!!
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning btn-outline-danger" (click)="deleteCategoryType(categoryTypeToDelete)">Ok</button>
+    <button class="btn btn-secondary btn-outline-info" (click)="closeDeleteModal(bsModalRef)">Cancel</button>
+  </div>
+</ng-template>

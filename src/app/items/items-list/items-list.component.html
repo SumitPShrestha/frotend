@@ -1,0 +1,102 @@
+<div class="container col-12">
+    <div class="col-12">
+      <h4>Items <p data-placement="top" data-toggle="tooltip" title="Add Item" class="float-right">
+        <button class="btn btn-outline-success btn-primary btn-xs" data-title="Add Item" data-toggle="modal" data-target="#add" (click)="openCreateModal()">
+          Add Item
+        </button>
+      </p></h4>
+      <div class="table-responsive" *ngIf="items && items.length > 0 && !addPopupOn">
+        <table datatable id="itemstable" class="row-border hover">
+          <thead>
+            <tr>
+              <th >Item Name</th>
+              <th >Item Description</th>
+              <th style="text-align: right; width: 10%">Rate</th>
+              <th style="text-align: center; width: 5%">Active</th>
+              <th style="text-align: center; width: 10%">Sub Items</th>
+              <th style="text-align: center; width: 5%">Edit</th>
+              <th style="text-align: center; width: 5%">De/Activate</th>
+              <th style="text-align: center; width: 5%">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td>{{item.ItemName}} </td>
+              <td>{{item.Description}}</td>
+              <td class="center" style="text-align: right">
+                Rs {{item.rate.Rate}} /-
+              </td>
+              <td class="center" style="text-align: center">
+                  <fa-icon [icon]="faCheckSquare" style="color: limegreen" *ngIf="item.IsActive==1"></fa-icon>
+                  <fa-icon [icon]="faCheckSquare" style="color: lightslategrey" *ngIf="item.IsActive==0"></fa-icon>
+              </td>
+              <td style="text-align: center">
+                <fa-icon [icon]="faListAlt" style="color: limegreen" *ngIf="item.HasSubItem==1 && item.IsActive==1" (mouseover)="populateSubItemsList(item)" [tooltip]="toolTemplate" placement="left"></fa-icon>
+                <fa-icon [icon]="faListAlt" style="color: lightslategrey" *ngIf="item.HasSubItem==0 || item.IsActive==0"></fa-icon>
+              </td>
+              <td class="center" style="text-align: center">
+                <button type="button" class="btn btn-outline-primary btn-info" (click)="openEditModal(item)">
+                  <fa-icon [icon]="faEdit" ></fa-icon>
+                </button>
+              </td>
+              <td class="center" style="text-align: center">
+                <button type="button" class="btn btn-outline-warning btn-secondary" *ngIf="item.IsActive==1" (click)="openDeactivateModal(item,deactivateTemplate)">
+                  <fa-icon [icon]="faPowerOff" ></fa-icon>
+                </button>
+                <button type="button" class="btn btn-outline-success btn-secondary" *ngIf="item.IsActive==0" (click)="openActivateModal(item,activateTemplate)">
+                  <fa-icon [icon]="faPowerOff" ></fa-icon>
+                </button>
+              </td>
+              <td class="center" style="text-align: center">
+                <button type="button" class="btn btn-outline-danger btn-dark" (click)="openDeleteModal(item,deleteTemplate)">
+                  <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="!items || items.length < 1 ">
+        <h6>No Data Found</h6>
+      </div>
+    </div>
+</div>
+<ng-template #toolTemplate><div [innerHtml]="subitemslist" style="text-align: left; font-weight: bold"></div></ng-template>
+
+<ng-template #deactivateTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><fa-icon [icon]="faExclamationTriangle" style="color: darkorange"></fa-icon></h4>
+  </div>
+  <div class="modal-body">
+    <b>{{itemToDeactivate.ItemName}}</b> will be deactivated !!!
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning btn-outline-danger" (click)="deactivateItem(itemToDeactivate,'D')">Ok</button>
+    <button class="btn btn-secondary btn-outline-info" (click)="bsModalRef.hide()">Cancel</button>
+  </div>
+</ng-template>
+<ng-template #activateTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><fa-icon [icon]="faCheckCircle" style="color: limegreen"></fa-icon></h4>
+  </div>
+  <div class="modal-body">
+    <b>{{itemToDeactivate.ItemName}}</b> will be activated !!!
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" (click)="deactivateItem(itemToDeactivate,'A')">Ok</button>
+    <button class="btn btn-secondary btn-outline-info" (click)="bsModalRef.hide()">Cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><fa-icon [icon]="faExclamationTriangle" style="color: darkorange"></fa-icon></h4>
+  </div>
+  <div class="modal-body">
+    <b>{{itemToDelete.ItemName}}</b> will be deleted !!!
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning btn-outline-danger" (click)="deleteItem(itemToDelete)">Ok</button>
+    <button class="btn btn-secondary btn-outline-info" (click)="closeDeleteModal(bsModalRef)">Cancel</button>
+  </div>
+</ng-template>

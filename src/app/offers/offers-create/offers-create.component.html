@@ -1,0 +1,91 @@
+<div class="modal-header modal-header-primary">
+  <h5>Add Offer
+  </h5>
+  <button type="button" class="close float-right" (click)="closeModal()">
+    <fa-icon [icon]="faCross" class="close-modal"></fa-icon>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="createOfferForm">
+    <div class="form-group">
+      <label for="offerName">Offer Name <span class="required">*</span></label>
+      <input type="text" class="form-control" name="offerName" id="offerName" placeholder="Offer Name" formControlName="offerName" [ngClass]="{ 'is-invalid': f.offerName.touched && f.offerName.errors }">
+      <div *ngIf="f.offerName.touched && f.offerName.errors" class="invalid-feedback">
+        <div *ngIf="f.offerName.errors.required">Offer Name is required</div>
+        <div *ngIf="f.offerName.errors.minlength">Offer Name should be at least three characters.</div>
+      </div>
+    </div>
+<!--    <div class="form-group">-->
+<!--      <label for="offer-type">Offer Type <span class="required">*</span></label>-->
+<!--      <input type="number" class="form-control" id="offer-type" placeholder="Offer Type" formControlName="offerType" [ngClass]="{ 'is-invalid': f.offerType.touched && f.offerType.errors }">-->
+<!--      <div *ngIf="f.offerType.touched && f.offerType.errors" class="invalid-feedback">-->
+<!--        <div *ngIf="f.offerType.errors.required">Offer Type is required</div>-->
+<!--        <div *ngIf="f.offerType.errors.minlength">Offer Type should be at least 10 characters.</div>-->
+<!--      </div>-->
+<!--    </div>-->
+    <div class="form-group">
+      <label for="CodeName">Offer Type <span class="required">*</span></label>
+      <ng-select [items]="codes"
+                 bindLabel="CodeName"
+                 bindValue="Code"
+                 [multiple]="false"
+                 placeholder="Select Offer Type"
+                 formControlName="offerType"
+                 [ngClass]="{ 'is-invalid': f.offerType.touched && f.offerType.errors }">
+      </ng-select>
+      <div *ngIf="f.offerType.touched && f.offerType.errors" class="invalid-feedback">
+        <div *ngIf="f.offerType.errors.required">Offer Type is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="effectiveDateFrom">Effective Date From <span class="required">*</span></label>
+      <input type="date" class="form-control" id="effectiveDateFrom" placeholder="Effective Date From" formControlName="effectiveDateFrom" [ngClass]="{ 'is-invalid': f.effectiveDateFrom.touched && f.effectiveDateFrom.errors }">
+      <div *ngIf="f.effectiveDateFrom.touched && f.effectiveDateFrom.errors" class="invalid-feedback">
+        <div *ngIf="f.effectiveDateFrom.errors.required">Effective Date From is required</div>
+        <div *ngIf="f.effectiveDateFrom.errors.minlength">Effective Date From should be at least 10 characters.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="effectiveDateTo">Effective Date To <span class="required">*</span></label>
+      <input type="date" class="form-control" id="effectiveDateTo" placeholder="Effective Date To" formControlName="effectiveDateTo" [ngClass]="{ 'is-invalid': f.effectiveDateTo.touched && f.effectiveDateTo.errors }">
+      <div *ngIf="f.effectiveDateTo.touched && f.effectiveDateTo.errors" class="invalid-feedback">
+        <div *ngIf="f.effectiveDateTo.errors.required">Effective Date To is required</div>
+        <div *ngIf="f.effectiveDateTo.errors.minlength">Effective Date To should be at least 10 characters.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input type="number" class="form-control" id="quantity" placeholder="Quantity ... " formControlName="quantity" [ngClass]="{ 'is-invalid': f.quantity.touched && f.quantity.errors }">
+      <div *ngIf="f.quantity.touched && f.quantity.errors" class="invalid-feedback">
+        <div *ngIf="f.quantity.errors.required">Quantity is required</div>
+        <div *ngIf="f.quantity.errors.minlength">Quantity should be at least 1 characters.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="quantityRemarks">Quantity Remarks</label>
+      <input type="text" class="form-control" id="quantityRemarks" placeholder="Quantity Remarks ... " formControlName="quantityRemarks" [ngClass]="{ 'is-invalid': f.quantityRemarks.touched && f.quantityRemarks.errors }">
+      <div *ngIf="f.quantityRemarks.touched && f.quantityRemarks.errors" class="invalid-feedback">
+        <div *ngIf="f.quantityRemarks.errors.minlength">Quantity should be at least 10 characters.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="discountPercentage">Discount Percentage</label>
+      <input type="number" class="form-control" id="discountPercentage" placeholder="Discount Percentage ... " formControlName="discountPercentage" [ngClass]="{ 'is-invalid': f.discountPercentage.touched && f.discountPercentage.errors }">
+      <div *ngIf="f.discountPercentage.touched && f.discountPercentage.errors" class="invalid-feedback">
+        <div *ngIf="f.discountPercentage.errors.minlength">Discount percentage should be at least 1 character.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="maxDiscountAmt">Maximum Discount Amount</label>
+      <input type="number" class="form-control" id="maxDiscountAmt" placeholder="Discount Amount ... " formControlName="maxDiscountAmt" [ngClass]="{ 'is-invalid': f.maxDiscountAmt.touched && f.maxDiscountAmt.errors }">
+      <div *ngIf="f.maxDiscountAmt.touched && f.maxDiscountAmt.errors" class="invalid-feedback">
+        <div *ngIf="f.maxDiscountAmt.errors.minlength">Discount amount should be at least 1 character.</div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-warning float-right" [disabled]="createOfferForm.pristine" (click)="onReset()">Reset</button>
+  <button type="submit" class="btn btn-success float-right" [disabled]="!createOfferForm.valid" (click)="onSubmitOffer(f.offerName.errors)">Save</button>
+</div>
+

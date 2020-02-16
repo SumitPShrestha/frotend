@@ -1,0 +1,135 @@
+<div class="modal-header modal-header-primary">
+  <h5>New Order
+  </h5>
+  <button type="button" class="close pull-right" (click)="closeModal()">
+    <fa-icon [icon]="faCross" class="close-modal"></fa-icon>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="createOrderForm">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Select a table </label>
+        <div class="item-box">
+          <ng-select [items]="tableList"
+                     bindLabel="TableName"
+                     bindValue="id"
+                     [multiple]="false"
+                     placeholder="Select a table"
+                     formControlName="TableKey"
+                     [ngClass]="{'is-invalid': f.TableKey.touched && f.TableKey.errors }"
+                     (change)="displayFirstRow()">
+          </ng-select>
+          <div *ngIf="submitted && f.TableKey.errors" class="invalid-feedback">
+            <div *ngIf="f.TableKey.errors.required">Table is required for orders</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="createOrderForm.value.TableKey">
+      <div class="form-row border-bottom">
+        <div class="form-group">
+          <div class="sn-box">S.N.</div>
+        </div>
+        <div class="form-group">
+          <div class="item-box">
+            Items
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="qty-box">
+            Quantity
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="price-box">
+            Item Rate
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="price-box">
+            Price
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="delete-box">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+
+      <!--<div *ngFor="let order of t.controls; let i = index"  class="list-group list-group-flush">-->
+      <div *ngFor="let order of createOrderForm.controls.orderDetail.controls; let i = index"  class="list-group list-group-flush">
+        <div [formGroup]="order" class="form-row">
+          <div class="form-group">
+            <div class="sn-box">{{i+1 | number }}</div>
+          </div>
+
+          <div class="form-group">
+            <div class="item-box">
+              <ng-select [items]="itemList"
+                         bindLabel="ItemName"
+                         bindValue="id"
+                         [multiple]="false"
+                         placeholder="Add a item"
+                         formControlName="ItemKey"
+                         [ngClass]="{'is-invalid': order.controls.ItemKey.touched && order.controls.ItemKey.errors }"
+                         (change)="getRate(order.value.ItemKey)">
+              </ng-select>
+              <div *ngIf="order.controls.ItemKey.touched && order.controls.ItemKey.errors" class="invalid-feedback">
+                <div *ngIf="order.controls.ItemKey.errors.required">Item is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="qty-box">
+              <input type="number" class="form-control" id="Quantity" placeholder="Quantity" formControlName="Quantity" [ngClass]="{'is-invalid': order.controls.Quantity.touched && order.controls.Quantity.errors }">
+              <div *ngIf="order.controls.Quantity.touched && order.controls.Quantity.errors" class="invalid-feedback">
+                <div *ngIf="order.controls.Quantity.errors.required">Quantity is required</div>
+                <div *ngIf="order.controls.Quantity.errors.min">Quantity should be atleast 1</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="price-box" *ngIf="order.value.ItemKey">
+              <span id="rate{{i}}"> {{itemRate | currency:'&#8360;'}}</span>
+            </div>
+            <div class="price-box" *ngIf="!order.value.ItemKey">
+              <span id="rate{{i}}"> -- </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="price-box" *ngIf="order.value.Quantity" >
+              <span id="price_{{i}}" >{{itemRate * order.value.Quantity | currency:'&#8360;'}}</span>
+            </div>
+            <div class="price-box" *ngIf="!order.value.Quantity" >
+              <span id="price_{{i}}" >Rs. 0.00</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="delete-box">
+            <button type="button" title="Remove this item" class="close pull-right" (click)="removeItemRow(i)">
+              <fa-icon [icon]="faCross" class="close-modal"></fa-icon>
+            </button>
+          </div> </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" >
+          <button type="button" class="btn btn-primary" (click)="addItemRow()">Add Item</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-warning float-right" [disabled]="createOrderForm.pristine" (click)="onReset()">Reset</button>
+  <button type="submit" class="btn btn-success float-right" [disabled]="!createOrderForm.valid" (click)="onSubmit()">Save</button>
+</div>
+

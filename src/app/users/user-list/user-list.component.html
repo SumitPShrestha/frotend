@@ -1,0 +1,113 @@
+<div class="container col-12">
+  <div class="row">
+    <div class="col-12">
+      <h4>Users <p data-placement="top" data-toggle="tooltip" title="Add Item" class="float-right">
+          <button class="btn btn-primary btn-xs" data-title="Add Item" data-toggle="modal" data-target="#add"
+            (click)="openCreateModal()">
+            Add User
+          </button>
+        </p>
+      </h4>
+      <div class="table-responsive" *ngIf="users && users.length > 0 && !addPopupOn">
+        <table datatable id="itemstable" class="row-border hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Gender</th>
+              <th>Birth Date</th>
+              <th style="text-align: center">Edit</th>
+              <th style="text-align: center">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>
+                <span *ngIf="user.userInfo.firstName">{{user.userInfo.firstName}}</span>
+                <span *ngIf="user.userInfo.midName">{{user.userInfo.midName}}</span>
+                <span *ngIf="user.userInfo.lastName">{{user.userInfo.lastName}}</span>
+              <td>{{user.username}}</td>
+              <td style="padding: 3px">
+                <span style="border:1px solid grey;font-size: 55%;display: table;margin: 3px ;" class="badge"
+                  *ngFor="let role of user.roles">
+                  {{role.roleName}}
+                </span>
+              </td>
+              <td>
+                <span class="badge">
+                  {{user.userInfo.gender=='M'?'Male':'Female'}}
+                </span>
+              </td>
+              <td>
+                <span class="badge">
+                  {{user.userInfo.dateOfBirth}}
+                </span>
+              </td>
+
+              <td class="center" style="text-align: center">
+                <button type="button" class="btn btn-outline-primary btn-info" (click)="openEditModal(user)">
+                  <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+              </td>
+
+              <td class="center" style="text-align: center">
+                <button type="button" class="btn btn-outline-danger btn-dark"
+                  (click)="openDeleteModal(user,deleteTemplate)">
+                  <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="!users || users.length < 1 ">
+        <h6>No Data Found</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #deactivateTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <fa-icon [icon]="faExclamationTriangle" style="color: darkorange"></fa-icon>
+    </h4>
+  </div>
+  <div class="modal-body">
+    <b>{{userToDeactivate.FirstName}} {{userToDeactivate.LastName}}</b> will be deactivated !!!
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning btn-outline-danger" (click)="deactivateUser(userToDeactivate,'D')">Ok</button>
+    <button class="btn btn-secondary btn-outline-info" (click)="bsModalRef.hide()">Cancel</button>
+  </div>
+</ng-template>
+<ng-template #activateTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <fa-icon [icon]="faCheckCircle" style="color: limegreen"></fa-icon>
+    </h4>
+  </div>
+  <div class="modal-body">
+    <b>{{userToDeactivate.FirstName}} {{userToDeactivate.LastName}}</b> will be activated !!!
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" (click)="deactivateUser(userToDeactivate,'A')">Ok</button>
+    <button class="btn btn-secondary btn-outline-info" (click)="bsModalRef.hide()">Cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <fa-icon [icon]="faExclamationTriangle" style="color: darkorange"></fa-icon>
+    </h4>
+  </div>
+  <div class="modal-body">
+    <b>{{userToDeactivate.FirstName}} {{userToDeactivate.LastName}}</b> will be deleted !!!
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning btn-outline-danger" (click)="deleteUser(userToDelete)">Ok</button>
+    <button class="btn btn-secondary btn-outline-info" (click)="closeDeleteModal(bsModalRef)">Cancel</button>
+  </div>
+</ng-template>

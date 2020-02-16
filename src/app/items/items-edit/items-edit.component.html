@@ -1,0 +1,99 @@
+<div class="modal-header modal-header-primary">
+  <h5>Edit Item
+  </h5>
+  <button type="button" class="close float-right" (click)="closeModal()">
+    <fa-icon [icon]="faCross" class="close-modal"></fa-icon>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="editItemForm">
+    <div class="form-row">
+      <div class="form-group col-6">
+        <label for="itemName">Item Name <span class="required">*</span></label>
+        <input type="text" class="form-control" name="itemName" id="itemName" placeholder="Item Name" formControlName="itemName" [ngClass]="{ 'is-invalid': f.itemName.touched && f.itemName.errors }">
+        <div *ngIf="f.itemName.touched && f.itemName.errors" class="invalid-feedback">
+          <div *ngIf="f.itemName.errors.required">Name is required</div>
+          <div *ngIf="f.itemName.errors.minlength">Name should be at least three characters.</div>
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <label for="itemName">Item Rate <span class="required">*</span></label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Rs.</span>
+          </div>
+          <input type="number" class="form-control" name="itemRate" id="itemRate" formControlName="itemRate" [ngClass]="{ 'is-invalid': f.itemRate.touched && f.itemRate.errors }">
+        </div>
+        <div *ngIf="f.itemRate.touched && f.itemRate.errors" class="invalid-feedback">
+          <div *ngIf="f.itemRate.errors.required">Rate is required</div>
+          <div *ngIf="f.itemRate.errors.min">Minimum Item Rate should be Re 1.00</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="item-description">Description <span class="required">*</span></label>
+      <input type="text" class="form-control" id="item-description" placeholder="Item contains ... " formControlName="itemDescription" [ngClass]="{ 'is-invalid': f.itemDescription.touched && f.itemDescription.errors }">
+      <div *ngIf="f.itemName.touched && f.itemDescription.errors" class="invalid-feedback">
+        <div *ngIf="f.itemDescription.errors.required">Description is required</div>
+        <div *ngIf="f.itemDescription.errors.minlength">Description should be at least 10 characters.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-check col-2">
+        <input type="checkbox" id="itemHasSubItem" name="inputCheckboxesCall" formControlName="itemHasSubItem" [checked]="editItemForm.value.itemHasSubItem==1">
+        <label for="itemHasSubItem">
+          Has Sub-Item?
+        </label>
+      </div>
+      <div class="col-10" *ngIf="editItemForm.value.itemHasSubItem==1">
+        <ng-select [items]="itemsList"
+                   bindLabel="ItemName"
+                   bindValue="id"
+                   [multiple]="true"
+                   placeholder="Select sub items"
+                   formControlName="selectedItemIds"
+                   [ngClass]="{ 'is-invalid': f.selectedItemIds.touched && f.selectedItemIds.errors }">
+        </ng-select>
+        <div *ngIf="f.selectedItemIds.touched && f.selectedItemIds.errors" class="invalid-feedback">
+          <div *ngIf="f.selectedItemIds.errors.required">Description is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row image-row">
+      <div class="form-group">
+        <!--<label for="item-description">Image</label>-->
+        <!--<input type="file" class="form-control" id="item-image" (change)="fileChangeEvent($event)">-->
+        <label class="btn btn-primary form-control">
+          <input type="file" id="item-image" (change)="fileChangeEvent($event)" />
+          Choose Image
+        </label>
+      </div>
+      <div class="spinner-grow text-primary" *ngIf="!editItemForm.value.itemImage" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="col-4" *ngIf="editItemForm.value.itemImage">
+        <img [src]="editItemForm.value.itemImage" />
+      </div>
+    </div>
+    <div class="form-row">
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="4 / 4"
+        [resizeToWidth]="128"
+        format="jpeg"
+        [imageQuality]="80"
+        [onlyScaleDown]="true"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"
+      ></image-cropper>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-warning float-right" [disabled]="editItemForm.pristine" (click)="onReset()">Reset</button>
+  <button type="submit" class="btn btn-success float-right" [disabled]="editItemForm.pristine || !editItemForm.valid" (click)="onSubmitItem(f.itemName.errors)">Save</button>
+</div>
+

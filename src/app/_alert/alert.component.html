@@ -1,0 +1,20 @@
+﻿<div *ngFor="let alert of alerts" class="{{cssClass(alert)}} alert-dismissable">
+    {{alert.message}}
+    <a class="close" (click)="removeAlert(alert)">&times;</a>
+</div>
+
+<style>
+  .alert-success {
+    color: #0c5b14;
+    background-color: rgba(219, 239, 220, 0.71);
+    border-color: #cde9ce;
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: 50px;
+    text-align: center;
+  }
+</style>

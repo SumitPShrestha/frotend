@@ -1,0 +1,38 @@
+<div class="container col-12">
+  <div class="row">
+    <div class="col-12">
+      <h4>Item Categories <p data-placement="top" data-toggle="tooltip" title="Add Orders" class="float-right">
+        <button class="btn btn-primary btn-xs" data-title="Add Item" data-toggle="modal" data-target="#add" (click)="openCreateModal()">
+          Add Item Category
+        </button>
+      </p></h4>
+      <div class="table-responsive" *ngIf="itemCategories && itemCategories.length > 0">
+        <table datatable class="row-border hover">
+          <thead>
+          <tr>
+            <th>Category Type</th>
+            <th>Category Name</th>
+            <th>Description</th>
+            <th>Parent Item Category Key</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let itemcat of itemCategories">
+            <td>{{itemcat.CategoryType.CategoryType}}</td>
+            <td>{{itemcat.CategoryName}}</td>
+            <td>{{itemcat.Description}}</td>
+            <td>{{itemcat.ParentItemCategoryKey?itemcat.ParentItemCategoryKey:'-'}}</td>
+            <td>{{itemcat.IsActive==1?'Active':'Inactive'}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="!itemCategories || itemCategories.length < 1 ">
+        <h6>No Data Found</h6>
+      </div>
+    </div>
+  </div>
+</div>
+

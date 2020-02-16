@@ -1,0 +1,15 @@
+.login-logo{
+  position: absolute;
+    top: 25%;
+    right: 25%;
+}
+.small-icon-logo{
+  position: absolute;
+  top: 0%;
+  right: 10%;
+  width: 10%;
+}
+svg{
+  width: 100%;
+
+}

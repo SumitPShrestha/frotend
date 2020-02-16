@@ -1,0 +1,27 @@
+<!-- <div class="input-wrapper" [class.required]="required">
+  <label>{{label}}</label>
+  <input type="text"
+     [required]="required"
+     [disabled]="disabled"
+     [minlength]="minlength"
+     [placeholder]="placeholder"
+     [(ngModel)]="data"
+     [ngModelOptions]="{standalone: true}"/>
+ </div> -->
+<div class="form-group wrapper">
+  <input class="form-control input" [required]="required" [disabled]="disabled" [minlength]="minlength"
+    [placeholder]="placeholder" [(ngModel)]="data" [ngModelOptions]="{standalone: true}" (input)="onChange()"
+    (change)="onChange()" (blur)="onTouchedFn()" type="text">
+  <span class="underline"></span>
+  <div class="error-message" *ngIf="showError">
+		{{errors[0]}}
+	</div>
+</div>
+<!-- <div class="form-group wrapper">
+  <label for="username">First Name <span class="required">*</span></label>
+  <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="First Name" formControlName="FirstName" [ngClass]="{ 'is-invalid': f.FirstName.touched && f.FirstName.errors }">
+  <div *ngIf="f.FirstName.touched && f.FirstName.errors" class="invalid-feedback">
+    <div *ngIf="f.FirstName.errors.required">First Name is required</div>
+    <div *ngIf="f.FirstName.errors.minlength">First Name should be at least three characters.</div>
+  </div>
+</div> -->

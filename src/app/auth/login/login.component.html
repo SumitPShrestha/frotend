@@ -1,0 +1,47 @@
+
+
+<div class="limiter no-padding">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <form class="login100-form validate-form" [formGroup]="loginForm" (ngSubmit)="doLogin()">
+        <div class="text-center" style="font-size: 40px">
+          <app-logo [type]="'smallIcon'"></app-logo>
+        </div>
+
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input class="form-control" type="text" id="username" name="username" formControlName="username" >
+        </div>
+
+
+        <div class="form-group">
+          <label >Password</label>
+          <input class="form-control" type="password" id="pass" name="pass"  formControlName="password" >
+        </div>
+
+        <div class="flex-sb-m w-full p-t-3 p-b-32">
+          <div>
+            <a href="#" class="txt1">
+              Forgot Password?
+            </a>
+          </div>
+        </div>
+
+
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn btn-outline-success" type='submit'>
+            Login
+          </button>
+        </div>
+        <span class="text-danger" *ngIf="invalidLogin"><label>Invalid Username or Password !!!</label> </span>
+      </form>
+
+      <div class="login100-more">
+     <app-logo></app-logo>
+      </div>
+    </div>
+  </div>
+</div>
+
+

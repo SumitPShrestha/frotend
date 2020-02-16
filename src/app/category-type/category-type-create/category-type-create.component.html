@@ -1,0 +1,32 @@
+<div class="modal-header modal-header-primary">
+  <h5>Add Offer
+  </h5>
+  <button type="button" class="close float-right" (click)="closeModal()">
+    <fa-icon [icon]="faCross" class="close-modal"></fa-icon>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="createCategoryTypeForm">
+    <div class="form-group">
+      <label for="categoryType">Category Type <span class="required">*</span></label>
+      <input type="text" class="form-control" name="categoryType" id="categoryType" placeholder="Category Type" formControlName="categoryType" [ngClass]="{ 'is-invalid': f.categoryType.touched && f.categoryType.errors }">
+      <div *ngIf="f.categoryType.touched && f.categoryType.errors" class="invalid-feedback">
+        <div *ngIf="f.categoryType.errors.required">Category Type is required</div>
+        <div *ngIf="f.categoryType.errors.minlength">Category Type should be at least five characters.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description <span class="required">*</span></label>
+      <input type="text" class="form-control" id="description" placeholder="Description" formControlName="description" [ngClass]="{ 'is-invalid': f.description.touched && f.description.errors }">
+      <div *ngIf="f.description.touched && f.description.errors" class="invalid-feedback">
+        <div *ngIf="f.description.errors.required">Description is required</div>
+        <div *ngIf="f.description.errors.minlength">Description should be at least 10 characters.</div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-warning float-right" [disabled]="createCategoryTypeForm.pristine" (click)="onReset()">Reset</button>
+  <button type="submit" class="btn btn-success float-right" [disabled]="!createCategoryTypeForm.valid" (click)="onSubmitCategoryType(f.categoryType.errors)">Save</button>
+</div>
+

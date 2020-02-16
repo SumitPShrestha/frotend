@@ -1,0 +1,80 @@
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" *ngIf="showSideBar">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+  <!--<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+    <a class="text-warning" (click)="logOut()" data-activates="dropdown1">Log Out</a>
+    </li>
+  </ul>
+</nav>
+<div class="clearfix"></div>
+<div class="col-12 paddingless">
+    <nav class="col-2 d-none d-md-block bg-light sidebar" *ngIf="showSideBar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a routerLink="/dashboard" class="">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/items" class="">Items</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/categorytypes" class="">Category Type</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/itemcategories" class="">Item Category</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/tables" class="">Tables</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/offers" class="">Offers</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/orders" class="">Orders</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/users" class="">Users</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!--<nav class="col-2 d-none d-md-block bg-light sidebar" *ngIf="getUser()">-->
+      <!--<div class="sidebar-sticky">-->
+        <!--<ul class="nav flex-column">-->
+          <!--<li class="nav-item">-->
+            <!--<a routerLink="/dashboard" class="">Dashboard</a>-->
+          <!--</li>-->
+          <!--<li class="nav-item">-->
+            <!--<a routerLink="/items" class="">Items</a>-->
+          <!--</li>-->
+          <!--<li class="nav-item">-->
+            <!--<a routerLink="/categorytypes" class="">Categroy Types</a>-->
+          <!--</li>-->
+          <!--<li class="nav-item">-->
+            <!--<a routerLink="/itemcategories" class="">Item Categroy</a>-->
+          <!--</li>-->
+          <!--<li class="nav-item">-->
+            <!--<a routerLink="/tables" class="">Tables</a>-->
+          <!--</li>-->
+          <!--<li class="nav-item">-->
+            <!--<a routerLink="/offers" class="">Offers</a>-->
+          <!--</li>-->
+          <!--<li class="nav-item">-->
+            <!--<a routerLink="/orders" class="">Orders</a>-->
+          <!--</li>-->
+          <!--<li class="nav-item">-->
+            <!--<a routerLink="/users" class="">Users</a>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</nav>-->
+
+    <div [ngClass]="{'col-12':!showSideBar,'col-10':showSideBar}" class="bodybg float-right paddingless">
+      <app-alert id="crud-alert" *ngIf="showSideBar"></app-alert>
+      <router-outlet></router-outlet>
+    </div>
+</div>
+
+
+

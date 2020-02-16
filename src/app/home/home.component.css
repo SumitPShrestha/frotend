@@ -1,0 +1,14 @@
+.list-group-item{
+  background-color: inherit;
+  border: none;
+}
+.card-action{
+  padding-bottom: 10px;
+}
+
+.card-action a {
+  margin: 4px;
+  padding: 5px;
+  border: 2px solid;
+  border-radius: 10%;
+}

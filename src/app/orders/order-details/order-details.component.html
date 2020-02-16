@@ -1,0 +1,166 @@
+
+<div class="modal-header modal-header-primary">
+  <h5>Order Details of Table {{order.TableKey}}
+  </h5>
+  <button type="button" class="btn btn-primary pull-right" aria-label="Add Item" (click)="addItem()">
+    Add
+  </button>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+</div>
+<div class="modal-body">
+  <form [formGroup]="editOrderForm">
+    <div class="table-responsive" *ngIf="orderDetails && orderDetails.length > 0">
+      <div>
+      <table id="detailsTable" class="row-border hover">
+        <thead>
+        <tr>
+          <th style="text-align: left; width: 10%">S.N.</th>
+          <th style="text-align: left; width: 20%" >Item Name</th>
+          <th style="text-align: center; width: 10%">Quantity</th>
+          <th style="text-align: center; width: 10%">Rate (Rs)</th>
+          <th style="text-align: center; width: 10%">Price (Rs)</th>
+          <th style="width: 5%"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let detail of orderDetails; let i = index" >
+          <td style="text-align: left">{{ i + 1 | number }} {{detail.id}}</td>
+          <td style="text-align: left" *ngIf="detail.status!=='new'">{{detail.ItemKey.ItemName}}</td>
+          <td style="text-align: left" *ngIf="detail.status==='new'">
+            <input type="text">
+          </td>
+          <td style="text-align: center">
+            <input type="number" class="form-control" name="quantity"  id="quantity_{{ i + 1 | number }}"  value="{{detail.Quantity}}" (change)="updateQuantity(detail.id, $event.target.value)" />
+            <!--<div *ngIf="f.quantity.errors.required">Quantity is required</div>-->
+            <!--<div *ngIf="f.quantity.errors.minlength">Quantity should be at least 10 characters.</div>-->
+            <!--<div *ngIf="f.quantity.errors.min">Quantity should be at least 1</div>-->
+
+          </td>
+          <td style="text-align: center">{{detail.ItemKey.rate.Rate}} </td>
+          <td style="text-align: center">{{detail.ItemKey.rate.Rate * detail.Quantity}}</td>
+          <td>
+            <button type="button" class="close float-right" (click)="openDeleteModal(detail, confirmModal)">
+              <fa-icon [icon]="faCross" class="close-modal"></fa-icon>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+        <div class="modal-footer">
+          <div class="float-md-left">
+            <button type="button" class="btn btn-success" (click)="updateOrder()" >Update Order</button>
+          </div>
+          <div class="float-md-left">
+            <button type="button" class="btn btn-success float-md-none" >Process to Bill</button>
+          </div>
+          <div class="float-md-right">Total Amount</div>
+          <div class="float-md-right">Rs. 2500 /-</div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #confirmModal>
+  <div class="modal-dialog">
+    <div class="modal-content ">
+      <div class="modal-header">
+        Confirm
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeConfirmationModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove <b>{{orderToDelete.ItemKey.ItemName}}</b> from order?<br><br>
+        <div class="text-center">
+          <button type="button" class="btn btn-danger" (click)="deleteOrder(orderToDelete)" >Yes</button>
+          <span>&nbsp;</span>
+          <button type="button" class="btn btn-primary" (click)="closeConfirmationModal()" >No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!--
+<div class="modal-header modal-header-primary">
+  <h5>Order Details of Table {{list.TableKey}}
+  </h5>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="editOrderForm">
+    <div class="table-responsive" *ngIf="orderDetails && orderDetails.length > 0">
+      <div>
+        <table id="detailsTable" class="row-border hover">
+          <thead>
+          <tr>
+            <th style="text-align: left; width: 10%">S.N.</th>
+            <th style="text-align: left; width: 20%" >Item Name</th>
+            <th style="text-align: center; width: 10%">Quantity</th>
+            <th style="text-align: center; width: 10%">Rate (Rs)</th>
+            <th style="text-align: center; width: 10%">Price (Rs)</th>
+            <th style="width: 5%"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let detail of orderDetails; let ndx = index"  >
+            <span *ngFor="let field of editOrderForm.controls.fields.controls; let i=index" [formGroupName]="i"></span>
+            <td style="text-align: left">{{ ndx + 1 | number }}</td>
+            <td style="text-align: left">{{detail.ItemKey.ItemName}}</td>
+            <td style="text-align: center">
+              <input type="number" class="form-control" name="quantity" id="quantity_{{ ndx + 1 | number }}" formControlName="quantity"  ngModel="detail.Quantity" [group]="editOrderForm.controls.fields.controls[i]" />
+            </td>
+            <td style="text-align: center">{{detail.ItemKey.rate.Rate}} </td>
+            <td style="text-align: center">{{detail.ItemKey.rate.Rate * detail.Quantity}}</td>
+            <td>
+              <button type="button" class="close float-right" (click)="openDeleteModal(detail, confirmModal)">
+                <fa-icon [icon]="faCross" class="close-modal"></fa-icon>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="modal-footer">
+          <div class="float-md-left">
+            <button type="button" class="btn btn-success" (onclick)="updateOrderDetails(orderDetails)" >Update</button>
+          </div>
+          <div class="float-md-left">
+            <button type="button" class="btn btn-success float-md-none" >Process to Bill</button>
+          </div>
+          <div class="float-md-right">Total Amount</div>
+          <div class="float-md-right">Rs. 2500 /-</div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #confirmModal>
+  <div class="modal-dialog">
+    <div class="modal-content ">
+      <div class="modal-header">
+        Confirm
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeConfirmationModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove <b>{{orderToDelete.ItemKey.ItemName}}</b> from order?<br><br>
+        <div class="text-center">
+          <button type="button" class="btn btn-danger" (click)="deleteOrder(orderToDelete)" >Yes</button>
+          <span>&nbsp;</span>
+          <button type="button" class="btn btn-primary" (click)="closeConfirmationModal()" >No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+!-->
+
+
